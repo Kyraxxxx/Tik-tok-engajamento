@@ -1,0 +1,120 @@
+from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, PageBreak
+from reportlab.lib.styles import ParagraphStyle
+from reportlab.lib.pagesizes import A4
+from reportlab.lib.units import cm
+
+doc = SimpleDocTemplate(
+    "ebook_tiktok_final_corrigido.pdf",
+    pagesize=A4,
+    rightMargin=2*cm,
+    leftMargin=2*cm,
+    topMargin=2*cm,
+    bottomMargin=2*cm
+)
+
+title = ParagraphStyle(
+    name="title",
+    fontSize=22,
+    leading=26,
+    spaceAfter=16
+)
+
+text = ParagraphStyle(
+    name="text",
+    fontSize=14,
+    leading=22,
+    spaceAfter=10
+)
+
+content = []
+
+def chapter(title_text):
+    content.append(Paragraph(f"<b>{title_text}</b>", title))
+    content.append(Spacer(1, 10))
+
+def block(paragraphs):
+    for p in paragraphs:
+        content.append(Paragraph(p, text))
+
+# CAPA
+content.append(Paragraph("<b>Como Faturar com Vídeos no TikTok</b>", title))
+content.append(Spacer(1, 20))
+block([
+    "Guia completo com estratégias práticas para transformar vídeos em dinheiro.",
+    "Este material foi feito para ser direto, aplicável e realmente útil."
+])
+content.append(PageBreak())
+
+# SUMÁRIO
+chapter("Sumário")
+block([
+    "1. Introdução",
+    "2. Mentalidade",
+    "3. Algoritmo",
+    "4. Nicho",
+    "5. Perfil",
+    "6. Estrutura de vídeo",
+    "7. Retenção",
+    "8. Engajamento",
+    "9. Conteúdo sem aparecer",
+    "10. Monetização",
+    "11. Escala",
+    "12. Plano de execução",
+    "13. Conclusão"
+])
+content.append(PageBreak())
+
+# TEXTO BASE
+long_block = [
+    "O TikTok continua sendo uma das maiores oportunidades atuais para crescer rápido e transformar atenção em dinheiro. Diferente de outras plataformas, ele permite que contas novas tenham alcance sem precisar de seguidores antigos.",
+    "O problema é que a maioria das pessoas usa a plataforma sem estratégia. Elas postam vídeos aleatórios esperando viralizar, mas não constroem um sistema que gera resultado.",
+    "Para crescer de verdade, você precisa entender como prender atenção e como direcionar essa atenção para algo que gere retorno.",
+    "Conteúdos simples, diretos e repetíveis funcionam melhor do que conteúdos complexos e sem padrão.",
+    "Quando você entende o padrão do que funciona, você para de depender da sorte e começa a repetir resultados.",
+    "Outro ponto importante é consistência. Quem posta com frequência e ajusta o conteúdo cresce mais rápido do que quem tenta acertar um vídeo perfeito.",
+    "Além disso, é essencial ter um caminho de monetização. Sem isso, as visualizações não se transformam em dinheiro.",
+    "Você precisa sempre pensar: esse vídeo leva a pessoa para onde?"
+]
+
+chapters = [
+    "Introdução",
+    "Mentalidade",
+    "Algoritmo",
+    "Nicho",
+    "Perfil",
+    "Estrutura de vídeo",
+    "Retenção",
+    "Engajamento",
+    "Conteúdo sem aparecer",
+    "Monetização",
+    "Escala",
+    "Plano de execução"
+]
+
+for c in chapters:
+    chapter(c)
+    block(long_block * 3)
+
+content.append(PageBreak())
+
+# RESUMO FINAL
+chapter("Resumo Final")
+block([
+    "Nicho certo facilita tudo.",
+    "Conteúdo consistente gera crescimento.",
+    "Estrutura simples aumenta retenção.",
+    "Monetização transforma views em dinheiro.",
+    "Escala vem da repetição do que funciona."
+])
+content.append(PageBreak())
+
+# CONTRA CAPA
+chapter("Contra Capa")
+block([
+    "Este material foi feito para ser aplicado.",
+    "O resultado depende da execução.",
+    "Consistência vence sorte."
+])
+
+doc.build(content)
+print("PDF gerado com sucesso.")
